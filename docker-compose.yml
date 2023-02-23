@@ -1,0 +1,31 @@
+# Commands
+# docker-compose up -d ---> to run container in a background
+# docker build . ---> to build an docker image from Dockerfile
+
+# Docker containers
+# are ephemeral meaning when the container stops running all information is lost. This would
+# obviously be a problem for our database! The solution is to create a volumes mount called
+# postgres_data  and then bind it to a dedicated directory within the container at the location /var/lib/postgresql/data/.
+
+version: "3.9"
+services:
+    # The web service depends on the db service to run
+    web:
+      build: .
+      command: python /code/manage.py runserver 0.0.0.0:8000
+      volumes:
+        - .:/code
+      ports:
+        - 8000:8000
+        # This means there will be two separate containers running within our Docker host: web and db
+      depends_on:
+        - db
+    db:
+      image: postgres:13
+      volumes:
+        - postgres_data:/var/lib/postgresql/data/
+      # Trust Authentication
+      environment:
+        - "POSTGRES_HOST_AUTH_METHOD=trust"
+volumes:
+  postgres_data:
