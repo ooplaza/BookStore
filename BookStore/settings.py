@@ -133,13 +133,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "/static/"
+# STATICFILES_DIRS tells Django where to look for static files in a Django project, such as a top-level static folder. 
+STATICFILES_DIRS = [BASE_DIR / "static"]
+# which sets the absolute location of these collected files
+STATIC_ROOT = BASE_DIR / "staticfiles"
+# which is the file storage engine used when collecting static files with the collectstatic command.
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage" 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 # To tell django to use our custom user model not the default User that django provided
 # To override the default user (Which is User) model by providing a value for this

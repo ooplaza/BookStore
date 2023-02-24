@@ -1,0 +1,1 @@
+console.log("Hello Django from JavaScript.")
