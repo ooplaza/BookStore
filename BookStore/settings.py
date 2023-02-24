@@ -145,3 +145,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # To override the default user (Which is User) model by providing a value for this
 AUTH_USER_MODEL = "accounts.CustomUser"
 
+
+# Everytime user Log In | Logout he/she automatically redirect to the Home url
+LOGIN_REDIRECT_URL = 'Home'
+LOGOUT_REDIRECT_URL = 'Home'

@@ -1,0 +1,18 @@
+There are four steps for adding a custom user model to our project:
+1. Create a CustomUser model
+2. Update django_project/settings.py
+3. Customize UserCreationForm and UserChangeForm
+4. Add the custom user model to admin.py
+
+We also want to add a AUTH_USER_MODEL config at the bottom of the file
+which will cause our project to use CustomUser instead of the default User model.
+
+
+Sign Up
+Implementing a sign up page for user registration is completely up to us. We’ll go through the
+standard steps for any new page:
+• create an app-level accounts/urls.py file
+• update the project-level django_project/urls.py to point to the accounts app
+• add a view called SignupPageView
+• create a signup.html template file
+• update home.html to display the sign up page

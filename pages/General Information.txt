@@ -1,0 +1,8 @@
+""" Both are used to check if they are authenticated. """
+
+When rendering a template RequestContext,
+the currently logged-in user, either a User instance or an AnonymousUser instance, is stored in the template variable {{ user }}:
+
+1. request.user --> Used when creating, updating and deleting this will determine if the object to be created is valid
+2. user --> Used when checking if authenticated.
+
