@@ -25,15 +25,17 @@
                     <a class="nav-link" href="{% url 'about' %}">About</a>
                 </li>
                 {% if user.is_authenticated %}
+                <!-- account (account_login) in explicitly stated since we're using allauth, django-allauth’s
+                     URL names rather than Django’s. -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    <a class="nav-link" href="{% url 'account_logout' %}">Log Out</a>
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                    <a class="nav-link" href="{% url 'account_login' %}">Log In</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+                    <a class="nav-link" href="{% url 'account_signup' %}">Sign Up</a>
                 </li>
                 {% endif %}
             </ul>

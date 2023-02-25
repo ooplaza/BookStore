@@ -1,3 +1,5 @@
+# This isn't needed anymore because django-allauth did the job already for the routes
+
 from . forms import CustomUserCreationForm
 from django.urls import reverse_lazy
 from django.views.generic import CreateView

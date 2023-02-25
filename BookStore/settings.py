@@ -41,6 +41,15 @@ INSTALLED_APPS = [
     # Newly installed app
     'accounts.apps.AccountsConfig',
     'pages.apps.PagesConfig',
+    
+    # Third Party Features
+    "crispy_forms",
+    "crispy_bootstrap5",
+    
+    # Allauth Third-party
+    "allauth",
+    "allauth.account",
+    
 ]
 
 MIDDLEWARE = [
@@ -57,7 +66,7 @@ ROOT_URLCONF = 'BookStore.urls'
 
 TEMPLATES = [
     {
-        # Updating DIRS setting means that Django will also look in this new folder.
+        # Updating DIRS setting means that Django will also look in this new folder (BASE_DIR / "templates")
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
@@ -130,6 +139,10 @@ USE_I18N = True
 USE_TZ = True
 
 
+# Django-Crispy-Forms for fields formatting
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
@@ -150,7 +163,32 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # To override the default user (Which is User) model by providing a value for this
 AUTH_USER_MODEL = "accounts.CustomUser"
 
-
 # Everytime user Log In | Logout he/she automatically redirect to the Home url
 LOGIN_REDIRECT_URL = 'Home'
-LOGOUT_REDIRECT_URL = 'Home'
+ACCOUNT_LOGOUT_REDIRECT = "home"
+
+# ADVANCED USER REGISTRATION
+# django-allauth config
+
+SITE_ID = 1
+AUTHENTICATION_BACKENDS = (
+"django.contrib.auth.backends.ModelBackend",
+"allauth.account.auth_backends.AuthenticationBackend",
+)
+
+# EMAIL BACKEND CONFIGURATION
+# This backend is not intended for use in production – it is provided as a convenience that can be used during development.
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Enable this to set REMEMBER ME to True in the Login Page
+# ACCOUNT_SESSION_REMEMBER = True 
+
+# ALLAUTH CONFIGURATIONS
+# This line will be disable the second password field in the sign-up
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+
+# EMAIL ONLY LOGIN
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True

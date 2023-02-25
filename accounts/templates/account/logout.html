@@ -1,0 +1,16 @@
+{% extends "_base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Log Out{% endblock title %}
+{% block content %}
+
+    <h1>Log Out</h1>
+    <p>Are you sure you want to log out?</p>
+    <form action="{% url 'account_logout' %}" method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <a href="{% url 'Home' %}" class="btn btn-info">Cancel</a>
+        <button class="btn btn-danger" type="submit">Log Out</button>
+    </form>
+
+{% endblock content %}
