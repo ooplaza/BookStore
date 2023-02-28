@@ -1,0 +1,5 @@
+Customizing Email from allauth
+
+The emails we have configured so far are generally referred to as “Transactional Emails” as they
+occur based on a user action of some kind. This is in contrast to “Marketing Emails” such as, say,
+a monthly newsletter.

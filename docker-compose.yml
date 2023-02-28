@@ -20,6 +20,9 @@ services:
         # This means there will be two separate containers running within our Docker host: web and db
       depends_on:
         - db
+      environment:
+        - DJANGO_SECRET_KEY=django-insecure-_cifuz@j&v0+nih+v4y(t58ll=4n5p$th*+!#i*fp78rckt!)6asasawfad121
+        - "DJANGO_DEBUG=True"
     db:
       image: postgres:13
       volumes:

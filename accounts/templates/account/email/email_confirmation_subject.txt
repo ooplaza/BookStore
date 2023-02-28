@@ -1,0 +1,13 @@
+{% comment %}
+    Internalization functionality which
+    supports multiple languages.
+
+    blocktrans:
+    template tags to support
+    translations.
+{% endcomment %}
+
+{% load i18n %}
+{% autoescape off %}
+{% blocktrans %}Please Confirm Your Email Address.{% endblocktrans %}
+{% endautoescape %}

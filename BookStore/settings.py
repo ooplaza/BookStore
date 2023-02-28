@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from environs import Env
+
+# Environment Variable
+env = Env()
+env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_cifuz@j&v0+nih+v4y(t58ll=4n5p$th*+!#i*fp78rckt!)6'
+SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool("DJANGO_DEBUG")
 
 ALLOWED_HOSTS = ['*']
 
@@ -38,6 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    # Allauth
+    'django.contrib.sites',
+    
     # Newly installed app
     'accounts.apps.AccountsConfig',
     'pages.apps.PagesConfig',
@@ -49,6 +57,11 @@ INSTALLED_APPS = [
     # Allauth Third-party
     "allauth",
     "allauth.account",
+    
+    # Third Party Social Media
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
     
 ]
 
@@ -76,6 +89,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
+                # `allauth` needs this from django
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -98,14 +114,16 @@ DATABASES={
 # #       'PORT':'5432',
 # #    },
     # Docker
-      'default':{
-      'ENGINE':'django.db.backends.postgresql',
-      'NAME':'postgres',
-      'USER':'postgres',
-      'PASSWORD':'postgres',
-      'HOST':'db',  # Set in docker-compose.yml
-      'PORT':'5432',
-   }
+#       'default':{
+#       'ENGINE':'django.db.backends.postgresql',
+#       'NAME':'postgres',
+#       'USER':'postgres',
+#       'PASSWORD':'postgres',
+#       'HOST':'db',  # Set in docker-compose.yml
+#       'PORT':'5432',
+#    }
+    "default": env.dj_db_url("DATABASE_URL",
+    default="postgres://postgres@db/postgres")
 }
 
 # Password validation
@@ -156,7 +174,6 @@ STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # To tell django to use our custom user model not the default User that django provided
@@ -169,7 +186,6 @@ ACCOUNT_LOGOUT_REDIRECT = "home"
 
 # ADVANCED USER REGISTRATION
 # django-allauth config
-
 SITE_ID = 1
 AUTHENTICATION_BACKENDS = (
 "django.contrib.auth.backends.ModelBackend",
@@ -178,17 +194,31 @@ AUTHENTICATION_BACKENDS = (
 
 # EMAIL BACKEND CONFIGURATION
 # This backend is not intended for use in production – it is provided as a convenience that can be used during development.
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# DEVELOPMENT ENVIRONMENT
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'plazaorl.2000@gmail.com'
+EMAIL_HOST_PASSWORD = 'ofpqsrrnftdhxssx'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 # Enable this to set REMEMBER ME to True in the Login Page
 # ACCOUNT_SESSION_REMEMBER = True 
 
 # ALLAUTH CONFIGURATIONS
 # This line will be disable the second password field in the sign-up
-ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
 
 # EMAIL ONLY LOGIN
-ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
+
+
+# Third Party Social
+# ACCOUNT_EMAIL_VERIFICATION = 'none' --> optional
+
+# EMAIL ORIGIN SENDER | EMAIL CONFIRMATION
+DEFAULT_FROM_EMAIL = "engr.orlyplaza@gmail.com"
