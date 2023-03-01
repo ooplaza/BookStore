@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     # Admin
@@ -25,8 +27,7 @@ urlpatterns = [
     # path("accounts/", include("accounts.urls")),
     path("", include('pages.urls')),
     path("books/", include("books.urls")),
-]
-
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # This route is already made by the django.contrib.auth.urls
 # urlpatterns = [

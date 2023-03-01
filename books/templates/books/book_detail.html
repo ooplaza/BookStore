@@ -1,11 +1,24 @@
 <!-- templates/books/book_detail.html -->
 {% extends "_base.html" %}
-{% block title %}{{ object.title }}{% endblock title %}
+{% block title %}{{ book.title }}{% endblock title %}
 
 {% block content %}
 <div class="book-detail">
-    <h2><a href="">{{ object.title }}</a></h2>
-    <p>Author: {{ object.author }}</p>
-    <p>Price: {{ object.price }}</p>
+    {% if book.cover %}
+        <img class="bookcover" src="{{ book.cover.url }}" alt="{{ book.title }}">
+    {% endif %}
+    <h2><a href="">{{ book.title }}</a></h2>
+    <p>Author: {{ book.author }}</p>
+    <p>Price: ${{ book.price }}</p>
+    <div>
+        <h3>Reviews</h3>
+        <ul>
+            {% for review in book.reviews.all %} 
+            <!-- reviews is from the book = models.ForeignKey(Book,on_delete=models.CASCADE,related_name="reviews") -->
+                <li>{{ review.review }} <p>-{{ review.author }}</p></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <a href="{% url 'book_list' %}" class="btn btn-info">Back</a>
 </div>
 {% endblock content %}

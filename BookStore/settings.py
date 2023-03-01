@@ -174,6 +174,10 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 # which is the file storage engine used when collecting static files with the collectstatic command.
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage" 
 
+# Media Files
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
