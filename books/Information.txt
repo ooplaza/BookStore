@@ -1,0 +1,8 @@
+MANIPULATING URLS
+
+The first is called a “slug,” a newspaper term for a short
+label for something that is often used in URLs
+
+USING UUID FOR URLS
+A field for storing "universally unique identifiers".
+Uses Python’s UUID class. When used on PostgreSQL, this stores in a uuid datatype, otherwise in a char(32).

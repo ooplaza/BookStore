@@ -18,12 +18,13 @@ from django.urls import path, include
 
 urlpatterns = [
     # Admin
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
     # User management
     #path('accounts/', include("django.contrib.auth.urls")), # This line of code has already a pre-defined routes like login,logout ...
     path("accounts/", include("allauth.urls")), # Since we're using all-auth we need to changed routes as well
     # path("accounts/", include("accounts.urls")),
-    path('', include('pages.urls')),
+    path("", include('pages.urls')),
+    path("books/", include("books.urls")),
 ]
 
 

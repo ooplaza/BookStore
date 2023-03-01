@@ -49,14 +49,16 @@ INSTALLED_APPS = [
     # Newly installed app
     'accounts.apps.AccountsConfig',
     'pages.apps.PagesConfig',
+    'books.apps.BooksConfig',
+    
     
     # Third Party Features
-    "crispy_forms",
-    "crispy_bootstrap5",
+    'crispy_forms',
+    'crispy_bootstrap5',
     
     # Allauth Third-party
-    "allauth",
-    "allauth.account",
+    'allauth',
+    'allauth.account',
     
     # Third Party Social Media
     'allauth.socialaccount',
