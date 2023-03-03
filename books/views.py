@@ -1,4 +1,6 @@
 """ 
+    USER PERMISSION NEED A DETAILS
+
     class PublisherDetailView(DetailView):
 
     model = Publisher
@@ -23,20 +25,37 @@
     processors; see get_context_data() for an example.
 """
 
-
+from django.db.models import Q
 from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import ListView, DetailView
 from . import models
 
 # Create your views here.
-class BookListView(ListView):
+class BookListView(LoginRequiredMixin, ListView):
     """ Returns a rendered list of Book. """
     model = models.Book
     context_object_name = "books"
+    # login_url = 'account_login' had already in the settings.py LOGIN_URL
     template_name = "books/book_list.html"
 
-class BookDetailView(DetailView):
+class BookDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     """ Returns a rendered book detail. """
     model = models.Book
     context_object_name = "book"
+    # login_url = 'account_login' had already in the settings.py LOGIN_URL
     template_name = "books/book_detail.html"
+    permission_required = 'books.special_status'
+    
+
+class SearchResultListView(ListView):
+    """ This views will render a filtered query data using search. """
+    model = models.Book
+    context_object_name = "book_search_list"
+    template_name = "books/search_results.html"
+    
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        return self.model.objects.filter(
+            Q (title__icontains=query) | Q (author__icontains=query) | Q (price__icontains=query)
+        )
